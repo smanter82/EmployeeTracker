@@ -1,7 +1,9 @@
+//dependencies
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 const { builtinModules } = require("module");
 
+//Prompt inquirer to start app
 module.exports = {
 runSearch:function(){
     inquirer
@@ -10,35 +12,49 @@ runSearch:function(){
         type: "rawlist",
         message: "What would you like to do?",
         choices: [
-          "Add a department",
-          "Update a department",
-          "View a department",
-          "Delete a department",
-          "Add a employee",
-          "Update an employee",
-          "View an employee",
-          "Delete an employee",
-          "Add a role",
-          "Update a role",
-          "View a role",
-          "Delete a role"
+          //required
+          "Add a department",  
+          "Add an employee",  
+          "Add a role",  
+          "View departments",  
+          "View employees",  
+          "View roles",  
+
+          //bonus
+          //"View employees by manager", 
+          // "Delete a department",  
+          // "Delete an employee",  
+          // "Delete a role",  
+
+          //required
+          "Update employee role", 
+
+          //bonus
+          // "Update employee manager",  
         ]
       })
+      //Perform functions based on key words in inquirer responses
       .then(function({action}) {
+        //For answers with the word Add, perform add function
         if(action.match(/Add/g)) {
             add(action)
         }
+        //for answers with the word Update, perform update function
         if(action.match(/Update/g)) {
             update(action)
         }
+        //for answers with the word View, perform view function
         if(action.match(/View/g)) {
             view(action)
         }
-        if(action.match(/Delete/g)) {
-            delete(action)
-        }
+        //for answers with the word Delete, perform delete function
+        // if(action.match(/Delete/g)) {
+        //     delete(action)
+        // }
       });
   },
+  //add function based on key words in inquirer answers
+
   add:function(action){  //add 3 more of these functions.
     if(action.match(/role/g)){
         inquirer
@@ -48,6 +64,8 @@ runSearch:function(){
         message: "What role do you want to add?"
       })
       .then(function(answer) {
+        //connection query to add role to table
+
         // var query = "SELECT position, song, year FROM top5000 WHERE ?";
         // connection.query(query, { artist: answer.artist }, function(err, res) {
         //   for (var i = 0; i < res.length; i++) {
@@ -56,19 +74,30 @@ runSearch:function(){
           runSearch();
         });
       }
+      //add new employee's first and last name, role, and department to table
       if(action.match(/employee/g)){
         inquirer
       .prompt({
-        name: "employee",
+        name: "employeeFirst",
         type: "input",
-        message: "Which employee would you like to add?"
+        message: "What is the employee's first name?"
+      },
+      {
+        name:  "employeeLast",
+        type: "input",
+        message: "What is the employee's last name'?"
       })
       .then(function(answer) {
+        //connection query to display list of employee roles to choose from
+
         // var query = "SELECT position, song, year FROM top5000 WHERE ?";
         // connection.query(query, { artist: answer.artist }, function(err, res) {
         //   for (var i = 0; i < res.length; i++) {
         //     console.log("Position: " + res[i].position + " || Song: " + res[i].song + " || Year: " + res[i].year);
         //   }
+
+        //connection query to display list of employee managers to choose from
+
           runSearch();
         });
       }
@@ -80,6 +109,8 @@ runSearch:function(){
         message: "What department do you want to add?"
       })
       .then(function(answer) {
+        //connection query to add department
+
         // var query = "SELECT position, song, year FROM top5000 WHERE ?";
         // connection.query(query, { artist: answer.artist }, function(err, res) {
         //   for (var i = 0; i < res.length; i++) {
@@ -89,6 +120,21 @@ runSearch:function(){
         });
       }
     },
+
+    view:function(action){  //add 3 more of these functions.
+      if(action.match(/roles/g)){
+        //connection query to display list of employee roles  
+        runSearch();
+      }
+      if(action.match(/employees/g)){
+        //connection query to display list of employees
+        runSearch();
+      }
+      if(action.match(/departments/g)){
+        //connection query to display list of departments
+        runSearch();
+      }
+      },
     
   
   
