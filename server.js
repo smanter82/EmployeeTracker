@@ -1,3 +1,5 @@
+//FINISH ADD ROLE, ADD EMPLOYEE, AND SECOND HALF OF UPDATE ROLE FUNCTIONS
+
 //dependencies
 var mysql = require("mysql");
 var inquirer = require("inquirer");
@@ -29,6 +31,7 @@ var connection = mysql.createConnection({
         name: "action",
         type: "rawlist",
         message: "What would you like to do?",
+        pageSize: 10,
         choices: [
           //required
           "Add a department",  
@@ -37,6 +40,7 @@ var connection = mysql.createConnection({
           "View departments",  
           "View employees",  
           "View roles",  
+          "Update employee role"
 
           //bonus
           //"View employees by manager", 
@@ -45,7 +49,7 @@ var connection = mysql.createConnection({
           // "Delete a role",  
 
           //required
-          "Update employee role", 
+           
 
           //bonus
           // "Update employee manager",  
@@ -161,31 +165,54 @@ var connection = mysql.createConnection({
         runSearch();
     })
   }
-  // function updateRole () {
-  //   inquirer
-  //   .prompt(
-  //     {
-  //     name: "employeeUpdate",
-  //     type: list,
-  //     message: "Last name of employee to be updated?",
-  //     choices []
-  //   },
-  //   {
-  //     name: "updatedRole",
-  //     type: list,
-  //     message: "New role of employee?",
-  //     choices []
-  //   }
-  //   ).then(function(answer) {
-  //     const query = 'UPDATE employee SET title = ? WHERE last_name = ?'
-  //       connection.query(query, {title: answer.updatedRole, last_name: answer.employeeUpdate}, function (err, res) {
-          
-  //         if (err) throw err;
-  //           console.table(res)
-  //       })
-  //   })
+  function updateRole () {
+    const roleQuery = 'SELECT * FROM employee'
+    connection.query(roleQuery, function (err, res) {     
+      if (err) throw err;
+    inquirer
+    .prompt([
+      {
+      name: "employeeUpdate",
+      type: "list",
+      message: "Which employee would you like to update?",
+      choices: function () {
+        const employeeInfo = [];
+        for (let i = 0; i < res.length; i++) {
+          let employeeName = res[i].first_name + " " + res[i].last_name
+          employeeInfo.push(employeeName);
+        }
+        return employeeInfo;
+      },
+      },
     
-  // }
+    //FIX THIS SO THE UPDATE FUNCTION WORKS!!
+      {
+      name: "updatedRole",
+      type: "list",
+      message: "New role of employee?",
+      choices: function () {
+        const roles = [];
+        connection.query('SELECT * FROM role', function(err, response){
+          if (err) throw err;
+          for (let i = 0; i < response.length; i++) {
+          let employeeRoles = response[i].title
+          roles.push(employeeRoles);
+        }
+        return roles;
+        })
+        
+      }
+    }]
+    ).then(function(answer) {
+      const query = 'UPDATE employee SET title = ? WHERE last_name = ?'
+        connection.query(query, {title: answer.updatedRole, last_name: answer.employeeUpdate}, function (err, res) {
+          
+          if (err) throw err;
+            console.table(res)
+        })
+    })
+    
+  })}
 
 
   
