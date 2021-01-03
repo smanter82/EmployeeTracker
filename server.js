@@ -150,39 +150,45 @@ var connection = mysql.createConnection({
   }
   function viewEmployees () {
     //connection query to view department
-    const query = 'SELECT * from role \
-         JOIN employee \
-         ON employee.role_id = role.id;';
+    const query = 'SELECT * from employee \
+      JOIN role \
+      ON employee.role_id = role.id \
+      JOIN department \
+      ON role.department_id = department.id;';
     connection.query(query, function (err, res) {
       if (err) throw err;
         console.table(res)
+        runSearch();
     })
   }
-  function updateRole () {
-    inquirer
-    .prompt(
-      {
-      name: "employeeUpdate",
-      type: list,
-      message: "Last name of employee to be updated?",
-      choices []
-    },
-    {
-      name: "updatedRole",
-      type: list,
-      message: "New role of employee?",
-      choices []
-    }
-    ).then(function(answer) {
-      const query = 'UPDATE employee SET title = ? WHERE last_name = ?'
-        connection.query(query, {title: answer.updatedRole, last_name: answer.employeeUpdate}, function (err, res) {
+  // function updateRole () {
+  //   inquirer
+  //   .prompt(
+  //     {
+  //     name: "employeeUpdate",
+  //     type: list,
+  //     message: "Last name of employee to be updated?",
+  //     choices []
+  //   },
+  //   {
+  //     name: "updatedRole",
+  //     type: list,
+  //     message: "New role of employee?",
+  //     choices []
+  //   }
+  //   ).then(function(answer) {
+  //     const query = 'UPDATE employee SET title = ? WHERE last_name = ?'
+  //       connection.query(query, {title: answer.updatedRole, last_name: answer.employeeUpdate}, function (err, res) {
           
-          if (err) throw err;
-            console.table(res)
-        })
-    })
+  //         if (err) throw err;
+  //           console.table(res)
+  //       })
+  //   })
     
-  }
+  // }
+
+
+  
   // add:function(action){  //add 3 more of these functions.
   //   if(action.match(/role/g)){
   //       inquirer
