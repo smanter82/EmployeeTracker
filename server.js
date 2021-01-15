@@ -1,5 +1,3 @@
-//FINISH ADD ROLE, ADD EMPLOYEE, AND SECOND HALF OF UPDATE ROLE FUNCTIONS
-
 //dependencies
 var mysql = require("mysql");
 var inquirer = require("inquirer");
@@ -42,17 +40,6 @@ function runSearch() {
         "View employees",
         "View roles",
         "Update employee role",
-
-        //bonus
-        //"View employees by manager",
-        // "Delete a department",
-        // "Delete an employee",
-        // "Delete a role",
-
-        //required
-
-        //bonus
-        // "Update employee manager",
       ],
     })
     //Perform functions based on inquirer responses
@@ -147,6 +134,7 @@ function addEmployee() {
       );
     });
 }
+//add role function
 function addRole() {
   inquirer
     .prompt([
@@ -167,7 +155,7 @@ function addRole() {
       },
     ])
     .then(function (answer) {
-      //connection query to add department
+      //connection query to add role
       const query = "INSERT INTO role SET ?;";
       connection.query(
         query,
@@ -185,7 +173,7 @@ function addRole() {
     });
 }
 function viewDepartments() {
-  //connection query to view department
+  //connection query to view departments
   const query = "SELECT * FROM department";
   connection.query(query, function (err, res) {
     if (err) throw err;
@@ -194,7 +182,7 @@ function viewDepartments() {
   });
 }
 function viewRoles() {
-  //connection query to view department
+  //connection query to view employee roles
   const query = "SELECT * FROM role";
   connection.query(query, function (err, res) {
     if (err) throw err;
@@ -203,7 +191,7 @@ function viewRoles() {
   });
 }
 function viewEmployees() {
-  //connection query to view department
+  //connection query to view employees
   const query =
     "SELECT * from employee \
       JOIN role \
@@ -217,6 +205,7 @@ function viewEmployees() {
   });
 }
 function updateRole() {
+  //function to update an employee's role
   inquirer
     .prompt([
       {
