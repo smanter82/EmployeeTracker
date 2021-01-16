@@ -68,6 +68,6 @@ Contact me with any feedback or questions through GitHub or by email.
 ## Walkthrough
 
 Walkthrough video link:
-[Walkthrough_Video](https://github.com/smanter82/EmployeeTracker)
+[Walkthrough_Video](https://drive.google.com/file/d/16wwgFVk9jyKBXV1mMqtB14lKW2YhFheA/view)
 
 Some code on this application may have been done in collaboration with my Bootcamp study group classmates: https://github.com/arensalmela, https://github.com/dmaysteinman, https://github.com/EddiePhi, https://github.com/ReindeerCode, https://github.com/DustinErwin, https://github.com/Ewager1, https://github.com/mdjonestwo, https://github.com/shannonquinn91/Note-Taker, https://github.com/JesalDM
