@@ -2,47 +2,58 @@
 
 ## Description
 
-A Content Management System for managing a company's employees using node, inquirer, and MySQL.  Users are able to view, add, delete, or update departments, employees, and employee roles within the database.
+A Content Management System for managing a company's employees using node, inquirer, and MySQL. Users are able to view or add departments, employees, and employee roles within the database. They are also able to update employee roles.
 
-## User Story
-```
-As a business owner
-I want to be able to view and manage the departments, roles, and employees in my company
-So that I can organize and plan my business
-```
-## Instructions
+## Screenshots
 
-How do you deliver this? Here are some guidelines:
+![Add_Department](./Assets/addDepScreen.png)
+![Add_Employee](./Assets/addEmpScreen.png)
+![Add_Role](./Assets/addRoleScreen.png)
+![View_Department](./Assets/viewDepScreen.png)
+![View_Employee](./Assets/viewEmpScreen.png)
+![View_Role](./Assets/viewRoleScreen.png)
+![Update_Role](./Assets/updateEmpRoleScreen.png)
 
-* Use the [MySQL](https://www.npmjs.com/package/mysql) NPM package to connect to your MySQL database and perform queries.
+## Table of Contents
 
-* Use [InquirerJs](https://www.npmjs.com/package/inquirer/v/0.2.3) NPM package to interact with the user via the command-line.
+- [Technologies](#Technologies)
+- [Usage](#Usage)
+- [Installation](#Installation)
+- [Feedback](#Feedback)
+- [Challenges](#Challenges)
+- [Walkthrough](#Walkthrough)
 
-* Use [console.table](https://www.npmjs.com/package/console.table) to print MySQL rows to the console. There is a built-in version of `console.table`, but the NPM package formats the data a little better for our purposes.
+## Technologies
 
-* You may wish to have a separate file containing functions for performing specific SQL queries you'll need to use. Could a constructor function or a class be helpful for organizing these?
+- node.js
+- Inquirer
+- MySql
+- console.table
 
-* You will need to perform a variety of SQL JOINS to complete this assignment, and it's recommended you review the week's activities if you need a refresher on this.
+## Usage
 
-![Employee Tracker](Assets/employee-tracker.gif)
+Business owners who want to be able to manage the departments within their buisiness by tracking employee information, including employees' roles within the company will be able to do so with this app.
 
-### Hints
+## Installation
 
-* You may wish to include a `seed.sql` file to pre-populate your database. This will make development of individual features much easier.
+- Install [node.js](https://nodejs.org/en/download/)
+- In node.js Integrated Terminal, run `npm install inquirer`
+- In node.js Integrated Terminal, run `npm install mysql`
+- In node.js Integrated Terminal, run `npm install console.table`
 
-* Focus on getting the basic functionality completed before working on more advanced features.
+## Feedback
 
-* Review the week's activities for a refresher on MySQL.
+Contact me with any feedback or questions through GitHub or by email.
 
-* Check out [SQL Bolt](https://sqlbolt.com/) for some extra MySQL help.
+- [GitHub](https://github.com/smanter82)
 
-### Submission on BCS
+- Email: sarahmanter@gmail.com
 
-You are required to submit the following:
+## Challenges
 
-* The URL of the GitHub repository
+- Getting inquirer to play nice with connection queries
+- Inserting / Updating with connection queries using question marks
 
-* A video demonstrating the entirety of the app's functionality 
+## Walkthrough
 
-- - -
-© 2019 Trilogy Education Services, a 2U, Inc. brand. All Rights Reserved.
+Some code on this application may have been done in collaboration with my Bootcamp study group classmates: https://github.com/arensalmela, https://github.com/dmaysteinman, https://github.com/EddiePhi, https://github.com/ReindeerCode, https://github.com/DustinErwin, https://github.com/Ewager1, https://github.com/mdjonestwo, https://github.com/shannonquinn91/Note-Taker, https://github.com/JesalDM
