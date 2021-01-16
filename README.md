@@ -6,13 +6,13 @@ A Content Management System for managing a company's employees using node, inqui
 
 ## Screenshots
 
-![Add_Department](./Assets/addDepScreen.png)
-![Add_Employee](./Assets/addEmpScreen.png)
-![Add_Role](./Assets/addRoleScreen.png)
-![View_Department](./Assets/viewDepScreen.png)
-![View_Employee](./Assets/viewEmpScreen.png)
-![View_Role](./Assets/viewRoleScreen.png)
-![Update_Role](./Assets/updateEmpRoleScreen.png)
+![Add_Department](./Assets/Screenshots/addDepScreen.png)
+![Add_Employee](./Assets/Screenshots/addEmpScreen.png)
+![Add_Role](./Assets/Screenshots/addRoleScreen.png)
+![View_Department](./Assets/Screenshots/viewDepScreen.png)
+![View_Employee](./Assets/Screenshots/viewEmpScreen.png)
+![View_Role](./Assets/Screenshots/viewRoleScreen.png)
+![Update_Role](./Assets/Screenshots/updateEmpRoleScreen.png)
 
 ## Table of Contents
 
