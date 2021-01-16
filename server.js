@@ -38,8 +38,14 @@ function runSearch() {
         "Add a role",
         "View departments",
         "View employees",
+        "View employees by manager",
         "View roles",
+        "View the total utilized budget of each department",
         "Update employee role",
+        "Update an employee's manager",
+        "Delete an employee",
+        "Delete a role",
+        "Delete a department",
       ],
     })
     //Perform functions based on inquirer responses
@@ -66,6 +72,24 @@ function runSearch() {
         case "Update employee role":
           updateRole();
           break;
+        case "Delete an employee":
+          deleteEmployee();
+          break;
+        case "Delete a role":
+          deleteRole();
+          break;
+        case "Delete a department":
+          deleteDepartment();
+          break;
+        case "Update an employee's manager":
+          updateEmployeeManager();
+          break;
+        case "View employees by manager":
+          employeesByManager();
+          break;
+        case "View the total utilized budget of each department":
+          viewDepartmentBudgets();
+          break;
       }
     })
     .catch((err) => console.log(err));
@@ -84,7 +108,6 @@ function addDepartment() {
       connection.query(query, { name: answer.department }, function (err, res) {
         if (err) throw err;
         viewDepartments();
-        runSearch();
       });
     });
 }
@@ -129,7 +152,6 @@ function addEmployee() {
           if (err) throw err;
           console.table(res);
           viewEmployees();
-          runSearch();
         }
       );
     });
@@ -168,7 +190,6 @@ function addRole() {
           if (err) throw err;
           console.table(res);
           viewRoles();
-          runSearch();
         }
       );
     });
@@ -194,11 +215,40 @@ function viewRoles() {
 function viewEmployees() {
   //connection query to view employees
   const query =
-    "SELECT * from employee \
-      JOIN role \
-      ON employee.role_id = role.id \
-      JOIN department \
-      ON role.department_id = department.id;";
+    "SELECT employee.id, first_name, last_name, manager_id, title, salary, name FROM employee\
+    LEFT JOIN role\
+    ON employee.role_id = role.id\
+    LEFT JOIN department\
+    ON role.department_id = department.id;";
+  connection.query(query, function (err, res) {
+    if (err) throw err;
+    console.table(res);
+    runSearch();
+  });
+}
+function employeesByManager() {
+  //connection query to view employees by manager
+  const query =
+    "SELECT employee.id, first_name, last_name, manager_id, title, salary, name FROM employee\
+    LEFT JOIN role\
+    ON employee.role_id = role.id\
+    LEFT JOIN department\
+    ON role.department_id = department.id\
+    ORDER BY manager_id asc;";
+  connection.query(query, function (err, res) {
+    if (err) throw err;
+    console.table(res);
+    runSearch();
+  });
+}
+function viewDepartmentBudgets() {
+  //connection query to view departent budgets (sum of salaries within each department)
+  const query =
+    "SELECT name, SUM(salary) FROM department\
+      LEFT JOIN role\
+      ON role.department_id = department.id\
+      GROUP BY department_id\
+      ORDER BY salary asc;";
   connection.query(query, function (err, res) {
     if (err) throw err;
     console.table(res);
@@ -231,6 +281,121 @@ function updateRole() {
           },
           {
             id: answer.employeeUpdate,
+          },
+        ],
+        function (err, res) {
+          if (err) throw err;
+          console.table(res);
+          viewEmployees();
+        }
+      );
+    });
+}
+function deleteEmployee() {
+  //function to delete an employee
+  inquirer
+    .prompt([
+      {
+        name: "employeeToDelete",
+        type: "input",
+        message: "What is the id of the employee you would like to delete?",
+      },
+    ])
+    .then(function (answer) {
+      //connection query to update employee's role
+      const query = "DELETE FROM employee WHERE ?;";
+      connection.query(
+        query,
+        [
+          {
+            id: answer.employeeToDelete,
+          },
+        ],
+        function (err, res) {
+          if (err) throw err;
+          console.table(res);
+          viewEmployees();
+        }
+      );
+    });
+}
+
+//delete role function
+function deleteRole() {
+  inquirer
+    .prompt([
+      {
+        name: "roleToDelete",
+        type: "input",
+        message: "What is the id of the role you want to delete?",
+      },
+    ])
+    .then(function (answer) {
+      //connection query to delete role
+      const query = "DELETE FROM role WHERE ?;";
+      connection.query(
+        query,
+        {
+          id: answer.roleToDelete,
+        },
+        function (err, res) {
+          if (err) throw err;
+          console.table(res);
+          viewRoles();
+        }
+      );
+    });
+}
+
+//delete department function
+function deleteDepartment() {
+  inquirer
+    .prompt({
+      name: "departmentToDelete",
+      type: "input",
+      message: "What is the id of the department you want to delete?",
+    })
+    .then(function (answer) {
+      //connection query to delete department
+      const query = "DELETE FROM department WHERE ?;";
+      connection.query(
+        query,
+        {
+          id: answer.departmentToDelete,
+        },
+        function (err, res) {
+          if (err) throw err;
+          viewDepartments();
+        }
+      );
+    });
+}
+//function to update an employee's manager
+function updateEmployeeManager() {
+  inquirer
+    .prompt([
+      {
+        name: "employeeToUpdate",
+        type: "input",
+        message: "What is the id of the employee would you like to update?",
+      },
+      {
+        name: "employeeNewManager",
+        type: "input",
+        message: "What is the id of the employee's new manager?",
+      },
+    ])
+    .then(function (answer) {
+      //connection query to update employee's role
+      const query = "UPDATE employee SET ? WHERE ?;";
+      connection.query(
+        query,
+        [
+          {
+            manager_id: answer.employeeNewManager,
+          },
+          {
+            id: answer.employeeToUpdate,
           },
         ],
         function (err, res) {
